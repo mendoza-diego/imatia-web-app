@@ -1,0 +1,48 @@
+<main class="flex-shrink-0">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+          </div>
+          <input type="text" class="form-control" placeholder="Buscar factura" aria-label="Buscar factura" aria-describedby="basic-addon1">
+        </div>
+      </div>
+      <div class="col text-end">
+        <button type="button" class="btn btn-primary" routerLink="/new"><i class="bi bi-plus-lg"></i> Nueva factura</button>
+      </div>
+    </div>
+    <h4 class="mb-4">Facturas</h4>
+    <div class="card mt-4">
+      <div class="card-body">
+        <span *ngIf="invoices.length == 0">Ninguna factura disponible</span>
+        <table *ngIf="invoices.length > 0" class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Núm</th>
+              <th scope="col">Cliente</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Base Imponible</th>
+              <th scope="col">Impuestos</th>
+              <th scope="col">Total</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="hover" routerLink="/edit/{{invoice.id}}" *ngFor="let invoice of invoices.reverse()">
+              <td scope="row">{{invoice.id}}</td>
+              <td scope="row">{{invoice.customer}}</td>
+              <td scope="row">{{invoice.date | date:'dd/MM/YYYY'}}</td>
+              <td scope="row">{{invoice.subtotal | currency:'':''}}</td>
+              <td scope="row">{{invoice.iva | currency:'':''}}</td>
+              <td scope="row">{{invoice.total | currency:'':''}}</td>
+              <td><a *ngIf="isAvailableToDelete(invoice)" [swal]="confirmDelete" (confirm)="deleteInvoice(invoice)" title="Borrar"><i class="bi bi-trash text-danger"></i></a></td>
+            </tr>
+          </tbody>
+        </table>
+        <swal #confirmDelete title="Borrar factura" text="¿Seguro que deseja borrar esta factura?" icon="question" [showCancelButton]="true" [focusCancel]="true"></swal>
+      </div>
+    </div>
+  </div>
+</main>

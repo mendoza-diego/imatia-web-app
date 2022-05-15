@@ -1,0 +1,94 @@
+<main class="flex-shrink-0">
+  <div class="container">
+    <h4 class="mb-4" *ngIf="invoice.id">Factura #{{invoice.id}}</h4>
+    <h4 class="mb-4" *ngIf="!invoice.id">Nueva factura</h4>
+    <form #invoiceForm="ngForm">
+      <div class="card mt-4">
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-sm-8">
+              <label for="customer" class="form-label required">Cliente</label>
+              <input type="text" [(ngModel)]="invoice.customer" class="form-control" id="customer" name="customer" required autofocus>
+            </div>
+            <div class="col-sm-4">
+              <label for="date" class="form-label required">Fecha</label>
+              <input type="date" [ngModel]="invoice.date | date:'yyyy-MM-dd'" (ngModelChange)="invoice.date = $event" class="form-control" id="date" name="date" required>
+            </div>
+            <div class="col-sm-4">
+              <label for="subtotal" class="form-label">Base Imponible</label>
+              <input class="form-control" [(ngModel)]="invoice.subtotal" type="text" value="0.00" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',' }" id="subtotal" name="subtotal" disabled readonly>
+            </div>
+            <div class="col-sm-4">
+              <label for="iva" class="form-label">Total de Impuestos</label>
+              <input class="form-control" [(ngModel)]="invoice.iva" type="text" value="0.00" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',' }" id="iva" name="iva" disabled readonly>
+            </div>
+            <div class="col-sm-4">
+              <label for="total" class="form-label">Importe Total</label>
+              <input class="form-control" [(ngModel)]="invoice.total" type="text" value="0.00" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',' }" id="total" name="total" disabled readonly>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-4">
+        <h5 class="card-header">Artículos</h5>
+        <div class="card-body">
+          <form #invoiceItemForm="ngForm">
+            <div class="row g-3">
+              <div class="col-sm-2">
+                <label for="code" class="form-label">Código</label>
+                <input type="text" [(ngModel)]="item.code" class="form-control" id="code" name="code" #code required>
+              </div>
+              <div class="col-sm-4">
+                <label for="description" class="form-label">Descripción</label>
+                <input type="text" [(ngModel)]="item.description" class="form-control" id="description" name="description" required>
+              </div>
+              <div class="col-sm-2">
+                <label for="subtotal" class="form-label">Cantidad</label>
+                <input class="form-control" [(ngModel)]="item.qty" type="number" value="0" id="qty" name="qty" min="1" required>
+              </div>
+              <div class="col-sm-2">
+                <label for="price" class="form-label">Precio</label>
+                <input class="form-control" [(ngModel)]="item.price" type="text" value="0.00" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',' }" id="price" name="price" required>
+              </div>
+              <div class="col-sm-2">
+                <label for="iva" class="form-label">IVA</label>
+                <select class="form-select" [(ngModel)]="item.iva" id="iva" name="iva" required>
+                  <option type="number" *ngFor="let iva of ivas" value="{{iva}}">{{iva}}%</option>
+                </select>
+              </div>
+              <div class="col">
+                <button type="button" (click)="addItem(item); code.focus()" [disabled]="invoiceItemForm.invalid" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Añadir artículo</button>
+              </div>
+              <table *ngIf="invoice!.items.length > 0" class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Cód.</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Cant.</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">IVA</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of invoice!.items">
+                    <td scope="row">{{item.code}}</td>
+                    <td scope="row">{{item.description}}</td>
+                    <td scope="row">{{item.qty}}</td>
+                    <td scope="row">{{item.price | currency:'':''}}</td>
+                    <td scope="row">{{item.iva}}</td>
+                    <td scope="row"><a href="javascript:void(0)" (click)="deleteInvoiceItem(item)" title="Borrar"><i class="bi bi-trash text-danger"></i></a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col text-end">
+        <button type="button" (click)="goBack()" class="mt-4 btn btn-secondary px-3 me-2">Cancelar</button>
+        <button type="button" (click)="save()" [disabled]="invoiceForm.invalid" class="mt-4 btn btn-success px-3"><i class="bi bi-save me-2"></i> Guardar</button>
+      </div>
+    </form>
+  </div>
+</main>
