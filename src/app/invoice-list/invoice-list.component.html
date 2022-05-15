@@ -16,9 +16,9 @@
     <h4 class="mb-4">Facturas</h4>
     <div class="card mt-4">
       <div class="card-body">
-        <span *ngIf="invoices.length == 0">Ninguna factura disponible</span>
+        <span *ngIf="(invoices | tableFilter: search).length == 0">Ninguna factura disponible</span>
         <div class="table-responsive">
-          <table *ngIf="invoices.length > 0" class="table table-hover">
+          <table *ngIf="(invoices | tableFilter: search).length > 0" class="table table-hover">
             <thead>
               <tr>
                 <th scope="col">Núm</th>
