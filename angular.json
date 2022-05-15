@@ -10,6 +10,9 @@
           "strict": true
         }
       },
+      "i18n": {
+        "sourceLocale": "es-ES"
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",

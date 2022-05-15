@@ -59,28 +59,30 @@
               <div class="col">
                 <button type="button" (click)="addItem(item); code.focus()" [disabled]="invoiceItemForm.invalid" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Añadir artículo</button>
               </div>
-              <table *ngIf="invoice!.items.length > 0" class="table table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col">Cód.</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Cant.</th>
-                    <th scope="col">Precio</th>
-                    <th scope="col">IVA</th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of invoice!.items">
-                    <td scope="row">{{item.code}}</td>
-                    <td scope="row">{{item.description}}</td>
-                    <td scope="row">{{item.qty}}</td>
-                    <td scope="row">{{item.price | currency:'':''}}</td>
-                    <td scope="row">{{item.iva}}</td>
-                    <td scope="row"><a href="javascript:void(0)" (click)="deleteInvoiceItem(item)" title="Borrar"><i class="bi bi-trash text-danger"></i></a></td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="table-responsive">
+                <table *ngIf="invoice!.items.length > 0" class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">Cód.</th>
+                      <th scope="col">Descripción</th>
+                      <th scope="col">Cant.</th>
+                      <th scope="col">Precio</th>
+                      <th scope="col">IVA</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of invoice!.items">
+                      <td scope="row">{{item.code}}</td>
+                      <td scope="row">{{item.description}}</td>
+                      <td scope="row">{{item.qty}}</td>
+                      <td scope="row">{{item.price | currency:'':''}}</td>
+                      <td scope="row">{{item.iva}}</td>
+                      <td scope="row"><a href="javascript:void(0)" (click)="deleteInvoiceItem(item)" title="Borrar"><i class="bi bi-trash text-danger"></i></a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </form>
         </div>

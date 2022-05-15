@@ -9,10 +9,12 @@ import { InvoiceDetailsComponent } from './invoice-details/invoice-details.compo
 import { InvoiceService } from './invoice.service';
 import { AppRoutingModule } from './app-routing.module';
 import { MessageService } from './message.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CurrencyMaskModule } from "ng2-currency-mask";
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { TableFilterPipe } from './table-filter.pipe';
+import { ErrorCatchingInterceptor } from './interceptors/error-catching.interceptor';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     InvoiceListComponent,
     InvoiceDetailsComponent,
     InvoiceListComponent,
-    InvoiceDetailsComponent
+    InvoiceDetailsComponent,
+    TableFilterPipe
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,13 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     CurrencyMaskModule,
     SweetAlert2Module.forRoot()
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorCatchingInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

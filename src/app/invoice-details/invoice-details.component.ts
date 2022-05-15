@@ -36,7 +36,7 @@ export class InvoiceDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private invoiceService: InvoiceService,
+    private service: InvoiceService,
     private location: Location
   ) {}
 
@@ -47,7 +47,7 @@ export class InvoiceDetailsComponent implements OnInit {
   getInvoice(): void {
     const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
     if (id && id > 0) {
-      this.invoiceService.getInvoice(id)
+      this.service.getInvoice(id)
         .subscribe(invoice => this.invoice = invoice);
     }
   }
@@ -63,10 +63,10 @@ export class InvoiceDetailsComponent implements OnInit {
 
   save(): void {
     if (this.invoice.id) {
-      this.invoiceService.updateInvoice(this.invoice)
+      this.service.updateInvoice(this.invoice)
         .subscribe(() => this.goBack());
     } else {
-      this.invoiceService.insertInvoice(this.invoice)
+      this.service.insertInvoice(this.invoice)
         .subscribe(() => this.goBack());
     }
   }

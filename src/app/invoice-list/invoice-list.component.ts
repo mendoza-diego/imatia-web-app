@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class InvoiceListComponent implements OnInit {
   invoices: Invoice[] = [];
+  search: string = "";
   
   constructor(private service: InvoiceService) { }
 

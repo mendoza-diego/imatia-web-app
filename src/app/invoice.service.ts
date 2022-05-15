@@ -10,7 +10,8 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Injectable({ providedIn: 'root' })
 export class InvoiceService {
-  private invoiceUrl = 'https://imatia-test.azurewebsites.net/invoices';
+  // private invoiceUrl = 'https://imatia-test.azurewebsites.net/invoices';
+  private invoiceUrl = 'http://localhost:8080/invoices';
   
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -56,9 +57,7 @@ export class InvoiceService {
 
   insertInvoice(invoice: Invoice): Observable<any> {
     return this.http.post(this.invoiceUrl, invoice, this.httpOptions).pipe(
-      tap(_ => {
-        Swal.fire(`Factura #${_}`, '¡Factura guardada!', 'success')
-      }),
+      tap(id => Swal.fire(`Factura #${id}`, '¡Factura guardada!', 'success')),
       catchError(this.handleError<any>('updateInvoice'))
     );
   }
