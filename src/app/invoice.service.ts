@@ -10,7 +10,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Injectable({ providedIn: 'root' })
 export class InvoiceService {
-  private invoiceUrl = 'http://localhost:8080/invoices';
+  private invoiceUrl = 'https://imatia-test.azurewebsites.net/invoices';
   
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
