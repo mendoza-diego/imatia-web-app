@@ -10,7 +10,7 @@ export class TableFilterPipe implements PipeTransform {
       return list;
     }
 
-    return list.filter(item => item.id.toString() === value.trim());
+    return list.filter(item => item.id.toString().includes(value.trim()));
 
  }
 
