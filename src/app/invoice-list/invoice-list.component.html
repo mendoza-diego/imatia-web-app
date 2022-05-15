@@ -31,7 +31,7 @@
               </tr>
             </thead>  
             <tbody>
-              <tr class="hover" routerLink="/edit/{{invoice.id}}" *ngFor="let invoice of invoices.reverse() | tableFilter: search">
+              <tr class="hover" routerLink="/edit/{{invoice.id}}" *ngFor="let invoice of invoices | tableFilter: search">
                 <td scope="row">{{invoice.id}}</td>
                 <td scope="row">{{invoice.customer}}</td>
                 <td scope="row">{{invoice.date | date:'dd/MM/YYYY'}}</td>
